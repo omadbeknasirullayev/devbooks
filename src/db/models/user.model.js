@@ -10,7 +10,6 @@ const schema = new Schema({
 
     birthday: {
         type: Date,
-        required: true
     },
 
     bio: {

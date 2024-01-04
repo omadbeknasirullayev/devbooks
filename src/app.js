@@ -9,6 +9,7 @@ const app = express()
 const run = async () => {
 
     const port = config.port || 5000
+    app.use(express.json())
 
     await connect(`${config.mongo_url}`);
 

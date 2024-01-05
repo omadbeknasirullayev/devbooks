@@ -1,7 +1,8 @@
 const express = require('express')
 const config = require('./config')
-const {connect} = require('mongoose');
-const router = require("./api/routes/index.routes")
+const { connect } = require('mongoose');
+const router = require("./api/routes/index.routes");
+const { error_handler } = require('./api/middlewares');
 
 const app = express()
 
@@ -14,9 +15,7 @@ const run = async () => {
     await connect(`${config.mongo_url}`);
 
     app.use('/api', router)
-
-
-
+    app.use(error_handler)
 
 
 

@@ -28,7 +28,7 @@ const schema = new Schema({
     },
 
     bio: {
-        type: Text,
+        type: String,
     },
 
     image: {

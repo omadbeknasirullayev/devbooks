@@ -3,7 +3,7 @@ const CustomError = require("../../utilities/custom_error");
 const jwt = require("../../utilities/jwt");
 
 /** Check token */
-const isAuth = (req, res, next) => {
+const isAuth = async (req, res, next) => {
     try {
         let token = req.headers?.authorization
 
@@ -14,25 +14,21 @@ const isAuth = (req, res, next) => {
 
         token = token.split(" ")[1]
 
-        jwt.verifyToken(token, async (err, result) => {
-            if (err) {
-                throw new CustomError('Invalid token', 401);
-            }
+        const result = await jwt.verifyToken(token)
 
-            let data
-            if (result.role == "USER") data = await UserModel.findOne({ _id: result.id })
-            else throw new CustomError('Invalid token', 401)
+        let data
+        if (result.role == "USER") data = await UserModel.findOne({ _id: result.id })
+        else throw new CustomError('Invalid token', 401)
 
-            // if (data.is_active == false) {
-            //     console.log(data.is_active);
-            //     throw new CustomError('Invalid token', 401)
-            // }
 
-            req.verify = result 
-            req.user = data
-            next();
-        });
-        
+        if (data.is_active == false) {
+            throw new CustomError('Invalid token', 401)
+        }
+
+        req.verify = result
+        req.user = data
+        next();
+
     } catch (error) {
         next(error);
     }

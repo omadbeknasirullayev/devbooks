@@ -1,6 +1,6 @@
 const { registrate, login, logout } = require('./auth.controllers')
 const { get_self_info, update_self_info } = require('./user.controllers')
-const { create_author, getAll } = require('./authors.controllers')
+const { create_author, get_all } = require('./authors.controllers')
 
 module.exports = {
     // auth
@@ -14,5 +14,5 @@ module.exports = {
 
     // author
     create_author,
-    getAll,
+    get_all,
 }

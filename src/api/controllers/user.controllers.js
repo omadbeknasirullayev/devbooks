@@ -1,10 +1,14 @@
 const { UserModel } = require("../../db/models")
 
-const getUser = async (req, res) => {
+const get_all = async (req, res, next) => {
+    try {
+        const user = await UserModel.find()
 
-    const user = await UserModel.find()
-
-    res.status(200).json(user)
+        res.status(200).json(user)
+        
+    } catch (error) {
+        next(error)
+    }
 }
 
 /** user self info */
@@ -38,7 +42,7 @@ const update_self_info = async (req, res, next) => {
 }
 
 module.exports = {
-    getUser,
+    get_all,
     get_self_info,
     update_self_info,
 } 
